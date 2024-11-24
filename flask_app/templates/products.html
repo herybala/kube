@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magasin de Vélo - Produits</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Nos Produits</h1>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/products">Produits</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <div class="product-list">
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.image_url }}" alt="Image de {{ product.name }}" class="product-image">
+                    <h3>{{ product.name }}</h3>
+                    <p>Catégorie : {{ product.category }}</p>
+                    <p>Prix : <strong>{{ product.price }} €</strong></p>
+                    <p>Stock : {{ product.stock }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+</body>
+</html>

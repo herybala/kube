@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactez-nous</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Contactez-nous</h1>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/products">Produits</a>
+            <a href="/contact">Contact</a>
+        </nav>
+    </header>
+    <main>
+        <section class="contact-info">
+            <h2>Informations de Contact</h2>
+            <p><strong>Adresse :</strong> {{ contact_info.address }}</p>
+            <p><strong>Téléphone :</strong> {{ contact_info.phone }}</p>
+            <p><strong>Email :</strong> <a href="mailto:{{ contact_info.email }}">{{ contact_info.email }}</a></p>
+        </section>
+        <section class="opening-hours">
+            <h2>Horaires d'ouverture</h2>
+            <ul>
+                {% for day, hours in contact_info.opening_hours.items() %}
+                    <li><strong>{{ day|capitalize }} :</strong> {{ hours }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
