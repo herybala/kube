@@ -1,5 +1,6 @@
 # kube
 Projet kube cesi
+<<<<<<< HEAD
 ## Dépendances:
 Installer "docker" et "docker compose"
 ## Structure:
@@ -22,3 +23,10 @@ Installer "docker" et "docker compose"
 ## Pour arrêter:
 - `cd kube_cesi`
 - `docker compose down --remove-orphans`
+=======
+- Démarer:
+  - docker compose build --no-cache
+  - docker compose up -d
+- Arrêter:
+  -docker compose down --remove-orphans
+>>>>>>> e5cadf0605e695b5d9a2d6237ad43ae6138228f5
