@@ -45,7 +45,7 @@ def get_products():
     if db is None:
         raise HTTPException(status_code=500, detail="Connexion à MongoDB échouée")
 
-    products = list(db['products'].find({})
+    products = list(db['products'].find({}))
     return products
 
 # Route pour récupérer un produit par son ID
