@@ -45,7 +45,7 @@ def get_products():
     if db is None:
         raise HTTPException(status_code=500, detail="Connexion à MongoDB échouée")
 
-    products = list(db['products'].find({}, {"_id": 0}))  # Exclure `_id`
+    products = list(db['products'].find({})
     return products
 
 # Route pour récupérer un produit par son ID
@@ -58,7 +58,7 @@ def get_product_by_id(product_id: str):
     # if not ObjectId.is_valid(product_id):
     #     raise HTTPException(status_code=400, detail="ID du produit invalide")
 
-    product = db['products'].find_one({"_id": product_id}, {"_id": 0})  # Exclure `_id`
+    product = db['products'].find_one({"_id": product_id})
     if not product:
         raise HTTPException(status_code=404, detail="Produit non trouvé")
     
