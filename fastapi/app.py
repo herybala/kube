@@ -1,4 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 from pymongo import MongoClient
 from bson import ObjectId
 from pydantic import BaseModel
@@ -10,6 +12,7 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb://admin:password@172.20.0.6:27017/")
 init_db(MONGO_URI)
 # Initialiser FastAPI
 app = FastAPI(title="Bike Shop API", description="API de vente en ligne avec FastAPI")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Connexion à MongoDB
 try:
@@ -19,6 +22,9 @@ try:
 except Exception as e:
     print(f"❌ Erreur de connexion : {e}")
     db = None
+    
+# Configurer Jinja2 pour les templates
+templates = Jinja2Templates(directory="templates")
 
 # Modèle Pydantic pour la validation des produits
 class Product(BaseModel):
