@@ -15,9 +15,9 @@ def init_db(MONGO_URI):
 
     # Données initiales
     products = [
-        {"_id": "0001", "name": "Vélo de route", "price": 800, "category": "Vélos", "stock": 10, "image_url": "/static/images/velo_route.jpg"},
-        {"_id": "0002", "name": "VTT", "price": 600, "category": "Vélos", "stock": 15, "image_url": "/static/images/vtt.jpg"},
-        {"_id": "0003", "name": "Vélo électrique", "price": 1200, "category": "Vélos", "stock": 5, "image_url": "/static/images/velo_electrique.jpg"}
+        {"id": "0001", "name": "Vélo de route", "price": 800, "category": "Vélos", "stock": 10, "image_url": "http://localhost/static/images/velo_route.jpg"},
+        {"id": "0002", "name": "VTT", "price": 600, "category": "Vélos", "stock": 15, "image_url": "http://localhost/static/images/vtt.jpg"},
+        {"id": "0003", "name": "Vélo électrique", "price": 1200, "category": "Vélos", "stock": 5, "image_url": "http://localhost/static/images/velo_electrique.jpg"}
         ]
 
     # Insérer les données si elles n'existent pas déjà
