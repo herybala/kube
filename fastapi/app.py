@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from bson import ObjectId
 from pydantic import BaseModel
 from utils import init_db
+from typing import List, Dict, Any
 import os
  
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://admin:password@172.20.0.6:27017/")
@@ -27,12 +28,39 @@ except Exception as e:
 templates = Jinja2Templates(directory="templates")
 
 # Modèle Pydantic pour la validation des produits
-class Product(BaseModel):
-    name: str
+# class Product(BaseModel):
+#     name: str
+#     price: float
+#     category: str
+#     stock: int
+#     image_url: str
+
+class ImageNode(BaseModel):
+    altText: str
+    height: int
+    width: int
+    id: str
+    originalSrc: str
+
+class ImageEdge(BaseModel):
+    node: ImageNode
+
+class VariantNode(BaseModel):
+    id: str
     price: float
-    category: str
-    stock: int
-    image_url: str
+    title: str
+
+class VariantEdge(BaseModel):
+    node: VariantNode
+
+class Product(BaseModel):
+    _id: str
+    description: str
+    handle: str
+    title: str
+    images: Dict[str, List[ImageEdge]]
+    variants: Dict[str, List[VariantEdge]]
+
 
 # Route d'accueil
 @app.get("/")
@@ -49,8 +77,8 @@ def get_products():
     return products
 
 # Route pour récupérer un produit par son ID
-@app.get("/products/{product_id}", response_model=Product)
-def get_product_by_id(product_id: str):
+@app.get("/products/{product_handle}", response_model=Product)
+def get_product_by_id(product_handle: str):
     if db is None:
         raise HTTPException(status_code=500, detail="Connexion à MongoDB échouée")
 
@@ -58,7 +86,7 @@ def get_product_by_id(product_id: str):
     # if not ObjectId.is_valid(product_id):
     #     raise HTTPException(status_code=400, detail="ID du produit invalide")
 
-    product = db['products'].find_one({"_id": product_id})
+    product = db['products'].find_one({"handle": product_handle})
     if not product:
         raise HTTPException(status_code=404, detail="Produit non trouvé")
     
