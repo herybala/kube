@@ -26,8 +26,19 @@ except Exception as e:
 # Configurer Jinja2 pour les templates
 templates = Jinja2Templates(directory="templates")
 
+def product_serializer(product):
+    return {
+        "id": str(product["_id"]),  # Convertir ObjectId a str
+        "name": product["name"],
+        "price": product["price"],
+        "category" : product["category"],
+        "stock" : product["stock"],
+        "image_url" : product["image_url"]
+    }
+
 # Modèle Pydantic pour la validation des produits
 class Product(BaseModel):
+    id: str
     name: str
     price: float
     category: str
@@ -46,7 +57,8 @@ def get_products():
         raise HTTPException(status_code=500, detail="Connexion à MongoDB échouée")
 
     products = list(db['products'].find({}))
-    return products
+
+    return [product_serializer(product) for product in products]
 
 # Route pour récupérer un produit par son ID
 @app.get("/products/{product_id}", response_model=Product)
